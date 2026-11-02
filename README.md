@@ -1,7 +1,6 @@
 # Paging – wer muss weichen, wenn der Platz knapp ist? – Streamlit-Demo
 
-<!-- TODO nach dem Deploy: direkt hierher den Live-Link setzen (Leerzeile davor und danach):
-**[→ Demo live ausprobieren](https://sebastianhanisch-paging-demo.streamlit.app/)** -->
+**[→ Demo live ausprobieren](https://sebastianhanisch-paging-demo.streamlit.app/)**
 
 Zweites Stück der Reihe **Online-Algorithmen** („Entscheiden ohne Kenntnis der Zukunft“) in der „Konzepte“-Reihe für die Website „Sebastian Hanisch – Operations Research und Machine Learning“, Nachfolger von [ski-rental-demo](https://github.com/sebastian-hanisch/ski-rental-demo).
 Anders als die Fall-Demos (ein Anwendungsfall, mehrere Verfahren im Vergleich) zeigt diese Demo **ein** Konzept, die **Wettbewerbsanalyse**, an einem wachsenden Beispiel: von einer Instanz zum Nachrechnen (zwei Plätze, drei Seiten) über die Folge, die gegen eine Regel gebaut ist, bis zu sechs typischen Folgen und der Frage, was mehr Platz kauft.
@@ -113,4 +112,4 @@ Gebaut mit Streamlit, Plotly, NumPy und pandas.
 
 ---
 
-Diese Demo ist Teil des Portfolios von [Sebastian Hanisch](https://sebastianhanisch.net) – Operations Research und Machine Learning ([Über mich](https://sebastianhanisch.net/ueber-mich.html)). Mehr zu den Demos: [Interaktive Demos](https://sebastianhanisch.net/demos.html).
+Diese Demo ist Teil des Portfolios von [Sebastian Hanisch](https://sebastianhanisch.net) – Operations Research und Machine Learning ([Über mich](https://sebastianhanisch.net/ueber-mich.html)). Mehr zur Reihe: [Online-Algorithmen: Entscheiden ohne Zukunft](https://sebastianhanisch.net/konzepte-online-algorithmen.html).
