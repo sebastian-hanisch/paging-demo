@@ -21,8 +21,8 @@ FOLGEN_HILFE = {
     "gleichverteilt": "Jede Anfrage wählt eine der N Seiten gleichwahrscheinlich. Mit N = k + 1 die Folge der unteren Schranke.",
     "Zipf": "Stabile Beliebtheit: Seite i wird mit Gewicht 1/i^0,8 angefragt (wenige Renner, viele Exoten).",
     "Arbeitsmengen": "Wechselndes Sortiment: je 300 Anfragen dreht sich alles um N zufällig gewählte Seiten aus einem Bestand von 50 N.",
-    "Schleife mit Fremdzugriffen": "Wie zyklisch über N Seiten, aber jede zehnte Anfrage geht auf eine fremde Seite.",
-    "Scan mit heißen Seiten": "Jede zweite Anfrage geht auf eine von N heißen Seiten, die übrigen laufen einmal durch 2000 weitere Seiten.",
+    "Schleife mit Fremdzugriffen": "Wie zyklisch über N Seiten, aber jede Anfrage geht mit 10 % Wahrscheinlichkeit auf eine fremde Seite.",
+    "Scan mit heißen Seiten": "Jede Anfrage geht mit 50 % Wahrscheinlichkeit auf eine von N heißen Seiten, die übrigen laufen einmal durch 2000 weitere Seiten.",
 }
 ZIPF_ALPHA = 0.8
 PHASE_LEN = 300
@@ -69,5 +69,5 @@ PRESET_HELP = {
     "Zufalls-Gegner: gleichverteilt über k + 1": "Jede Anfrage trifft zufällig eine von neun Seiten: kein Verfahren, auch nicht mit Zufall, liegt dauerhaft unter dem Faktor H_k.",
     "Zipf: stabile Beliebtheit": "Wenige Renner, viele Exoten, die Beliebtheit bleibt: LFU gewinnt hier, obwohl es keine Garantie hat.",
     "Arbeitsmengen: Sortiment wechselt": "Das Sortiment wechselt alle 300 Anfragen: LFU hält alte Renner fest und verliert um ein Vielfaches.",
-    "Schleife mit Fremdzugriffen": "Eine Tour über zwölf Seiten bei sechzehn Plätzen, jede zehnte Anfrage fremd: FIFO bricht ein, LRU nicht.",
+    "Schleife mit Fremdzugriffen": "Eine Tour über zwölf Seiten bei sechzehn Plätzen, jede Anfrage mit 10 % Wahrscheinlichkeit fremd: FIFO bricht ein, LRU nicht.",
 }

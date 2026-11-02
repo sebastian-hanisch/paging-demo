@@ -241,4 +241,4 @@ def verdict_anomalie(book: dict, freq: dict) -> tuple[str, str]:
     f3, f4 = book["FIFO"][3], book["FIFO"][4]
     kind = "warning" if f4 > f3 else "info"
     return kind, (f"Lehrbuchfolge: FIFO macht {f3} Fehler mit 3 Plätzen und {f4} mit 4; LRU {book['LRU'][3]} und {book['LRU'][4]}, das Optimum {book['Optimum'][3]} und {book['Optimum'][4]}. "
-                  f"Auf {C.ANOMALY_TRIALS} Zufallsfolgen tritt so etwas bei FIFO in {freq['FIFO']:.1f} % auf, bei LFU in {freq['LFU']:.1f} %, bei LRU in {freq['LRU']:.1f} %.")
+                  f"Auf {C.ANOMALY_TRIALS} Zufallsfolgen tritt so etwas (mehr Fehler mit einem Platz mehr, für irgendein k von 1 bis 6) bei FIFO in {freq['FIFO']:.1f} % auf, bei LFU in {freq['LFU']:.1f} %, bei LRU in {freq['LRU']:.1f} %.")

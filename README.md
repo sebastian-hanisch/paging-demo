@@ -16,7 +16,7 @@ Ein Vorwärtslager hat k Schnellzugriffsplätze, die Artikel werden nacheinander
 ## Modell
 
 k Plätze, N verschiedene Seiten im aktiven Bestand, Anfragefolge der Länge L; eine Anfrage ist ein **Fehler**, wenn die Seite nicht im Speicher liegt (Kosten 1, danach liegt sie im Speicher, bei vollem Speicher weicht eine andere). Vier Regeln ohne Kenntnis der Zukunft: **LRU** (verdrängt die am längsten nicht angefragte Seite), **FIFO** (die am längsten im Speicher liegende), **LFU** (die am seltensten angefragte; bei Gleichstand die am längsten nicht angefragte), **Marking mit Zufall** (merkt je Phase die angefragten Seiten, verdrängt zufällig eine nicht gemerkte). Das **Optimum mit Vorwissen** (Belady) verdrängt die Seite, die am spätesten wieder angefragt wird. Gemessen wird der **Quotient der Fehlerzahlen** zum Optimum. Formeln im 📐-Expander der App.
-Sechs Folgen: **zyklisch** (die N Seiten der Reihe nach), **gleichverteilt**, **Zipf** (Gewicht 1/i^0,8), **Arbeitsmengen** (je 300 Anfragen N zufällige Seiten aus 50 N), **Schleife mit Fremdzugriffen** (zyklisch, jede zehnte Anfrage fremd), **Scan mit heißen Seiten** (jede zweite Anfrage auf eine von N heißen Seiten, die übrigen laufen durch 2000 weitere). „Marking mit Zufall“ ist im Ergebnis das Mittel über 50 Läufe.
+Sechs Folgen: **zyklisch** (die N Seiten der Reihe nach), **gleichverteilt**, **Zipf** (Gewicht 1/i^0,8), **Arbeitsmengen** (je 300 Anfragen N zufällige Seiten aus 50 N), **Schleife mit Fremdzugriffen** (zyklisch, jede Anfrage mit 10 % Wahrscheinlichkeit fremd), **Scan mit heißen Seiten** (jede Anfrage mit 50 % Wahrscheinlichkeit auf eine von N heißen Seiten, die übrigen laufen durch 2000 weitere). „Marking mit Zufall“ ist im Ergebnis das Mittel über 50 Läufe.
 
 ## Methodik
 
@@ -36,15 +36,15 @@ Alle Zahlen in `tests/test_claims.py` nachgerechnet. „Quotient“ steht für F
 |---|---|
 | Mini-Instanz von Hand (k = 2, a b c a b c) | LRU, FIFO, LFU: 6 Fehler; Optimum 4 (a, b, c, dann b); Quotient 1,5. |
 | Zyklische Folge über k + 1 Seiten: LRU, FIFO und LFU? | Fehlen bei **100 %** der Anfragen. Quotient 1,997 (k = 2), 3,976 (k = 4), 7,877 (k = 8), 11,685 (k = 12), 29,73 (k = 32): nähert sich k von unten (endliche Länge). |
-| Dieselbe Folge mit Zufall? | Marking mit Zufall 1,502 / 2,083 / 2,702 / 3,048 / 3,822, jeweils nahe bei H_k (1,500 / 2,083 / 2,718 / 3,103 / 4,058; zwischen 0,9 und 1,02 H_k), weit unter 2·H_k und unter k. |
-| Gleichverteilte Folge über k + 1 Seiten (k = 8)? | **Alle** Regeln liegen innerhalb von 6 % bei H_8 = 2,718: LRU 2,625, FIFO 2,769, LFU 2,678, Marking 2,657. Das ist die Folge der unteren Schranke: kein Verfahren, auch nicht mit Zufall, kommt dauerhaft darunter. |
-| Zipf (k = 8, N = 200)? | **LFU gewinnt**: 1,230 gegen LRU 1,383, FIFO 1,407, Marking 1,391. |
-| Arbeitsmengen (k = 8, N = 10)? | **LFU verliert** um ein Vielfaches: 7,956 gegen LRU 2,093, FIFO 2,040, Marking 2,118. Es hält alte Renner fest, wenn das Sortiment wechselt. LFU hat für kein c eine Garantie. |
-| Schleife mit Fremdzugriffen (k = 16, N = 12)? | **FIFO bricht ein**: 2,923 gegen LRU 1,219, LFU 1,045, Marking 1,652. |
+| Dieselbe Folge mit Zufall? | Marking mit Zufall 1,502 / 2,083 / 2,702 / 3,048 / 3,822 (Mittel über 20 Läufe; die dritte Stelle rauscht um etwa 0,01), jeweils nahe bei H_k (1,500 / 2,083 / 2,718 / 3,103 / 4,058; zwischen 0,94 und 1,00 H_k, mit k fallend), weit unter 2·H_k und unter k. |
+| Gleichverteilte Folge über k + 1 Seiten (k = 8)? | Auf dieser einen Folge (Preset, Seed 7, Länge 5000) liegen **alle** Regeln innerhalb von 6 % bei H_8 = 2,718: LRU 2,625, FIFO 2,769, LFU 2,678, Marking 2,657; die Streuung einer Folge beträgt etwa 3 %, bei 400 000 Anfragen liegen alle vier um 0,8 % oder weniger bei H_8. Das ist die Folge der unteren Schranke: kein Verfahren, auch nicht mit Zufall, kommt dauerhaft darunter. |
+| Zipf (k = 8, N = 200)? | **LFU gewinnt** (eine Folge, Seed 7): 1,230 gegen LRU 1,383, FIFO 1,407, Marking 1,391. Im Mittel über fünf Seeds bleibt die Reihenfolge, die Zahlen sind etwas anders (LFU 1,19, LRU 1,38, FIFO 1,40, Marking 1,39). |
+| Arbeitsmengen (k = 8, N = 10)? | **LFU verliert** um ein Vielfaches (eine Folge, Seed 7): 7,956 gegen LRU 2,093, FIFO 2,040, Marking 2,118; im Mittel über fünf Seeds 8,09 gegen 2,12 / 2,08 / 2,11, also etwa das Vierfache. Es hält alte Renner fest, wenn das Sortiment wechselt. LFU hat für kein c eine Garantie. |
+| Schleife mit Fremdzugriffen (k = 16, N = 12)? | **FIFO bricht ein** (eine Folge, Seed 7): 2,923 gegen LRU 1,219, LFU 1,045, Marking 1,652; im Mittel über fünf Seeds FIFO 2,91, LRU 1,25, LFU 1,05, Marking 1,70. |
 | Sechs Folgen im Mittel (k = 8, N = 12)? | LRU zwischen 1,421 (Scan mit heißen Seiten) und 2,741 (zyklisch), also weit unter der Garantie k = 8; LFU am besten bei „Scan mit heißen Seiten“ (1,165), am schlechtesten bei „Arbeitsmengen“ (5,111). |
 | Mehr Platz für das Optimum, Formel k/(k − h + 1)? | LRU mit 8 Plätzen gegen das Optimum mit 6 / 4 / 2 Plätzen: 2,657 / 1,598 / 1,142 (Formel 2,667 / 1,600 / 1,143); mit 16 Plätzen gegen 12 / 8 / 4: 3,184 / 1,775 / 1,230 (Formel 3,200 / 1,778 / 1,231). Die Formel wird von unten erreicht (Anlaufphase). |
-| Mehr Platz für LRU (Zipf, N = 200)? | Die Fehlerquote sinkt von 95,8 % (k = 2) auf 40,2 % (k = 64), der **Quotient zum Optimum steigt** von 1,119 auf 1,948. Mehr Platz hilft absolut, nicht relativ zum Optimum. |
-| Belady-Anomalie? | Lehrbuchfolge 1 2 3 4 1 2 5 1 2 3 4 5: FIFO 9 Fehler mit 3 Plätzen und **10 mit 4**; LRU 10 und 8; Optimum 7 und 6. Auf 2000 Zufallsfolgen (Länge 60, 8 Seiten) tritt so etwas bei FIFO in 0,55 % auf, bei LFU in 0,30 %, bei LRU in 0 %. |
+| Mehr Platz für LRU (Zipf, N = 200)? | Auf einer Folge (Seed 7, Länge 5000) sinkt die Fehlerquote von 95,8 % (k = 2) auf 40,2 % (k = 64), der **Quotient zum Optimum steigt** von 1,119 auf 1,948. Mehr Platz hilft absolut, nicht relativ zum Optimum. |
+| Belady-Anomalie? | Lehrbuchfolge 1 2 3 4 1 2 5 1 2 3 4 5: FIFO 9 Fehler mit 3 Plätzen und **10 mit 4**; LRU 10 und 8; Optimum 7 und 6. Auf 2000 Zufallsfolgen (Länge 60, 8 Seiten) tritt so etwas (mehr Fehler mit k + 1 als mit k Plätzen, für irgendein k von 1 bis 6) bei FIFO in 0,55 % auf (11 Folgen), bei LFU in 0,30 % (6 Folgen), bei LRU in 0 % (LRU ist ein Stapel-Verfahren, dort gilt das als Satz). Der Unterschied zwischen FIFO und LFU ist bei so wenigen Folgen nicht belastbar. |
 
 ## Ehrliche Grenzen
 
@@ -57,7 +57,7 @@ Alle Zahlen in `tests/test_claims.py` nachgerechnet. „Quotient“ steht für F
 
 ## Verifikation
 
-- **Umfang:** 125 Tests (siehe `pytest --collect-only -q tests`), 45 bis 90 Sekunden lokal je nach Last.
+- **Umfang:** 125 Tests (siehe `pytest --collect-only -q tests`), rund 150 Sekunden lokal.
 - **Kern:** Fehlerflags gegen Handrechnung auf der Mini-Instanz und auf kleinen Folgen von Hand (LRU, FIFO, LFU, Belady); Randfälle (ein Platz, alles passt, Folgenformen).
 - **Orakel** (`tests/test_oracle_paging.py`): Belady gegen die **vollständige Aufzählung aller Cache-Zustände** (200 Folgen); LRU gegen die Stapelabstands-Regel; FIFO und LFU gegen zweite Fassungen; Marking verdrängt nie eine in der laufenden Phase angefragte Seite.
 - **Eigenschaften** (`tests/test_eigenschaften_paging.py`): kein Verfahren schlägt das Optimum; Online-Verfahren sehen die Zukunft nicht (Präfix-Eigenschaft); LRU und Optimum werden mit mehr Platz nie schlechter; Umbenennen der Seiten ändert nichts; LRU und Marking machen höchstens k·(OPT + 1) Fehler; LFU hat auf einer gebauten Folge keine solche Schranke.

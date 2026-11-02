@@ -100,7 +100,7 @@ with st.expander("So funktioniert Paging", expanded=True):
 1. **Der Speicher hat k Plätze.** Jede Anfrage nennt einen Artikel (eine Seite). Liegt er im Speicher, ist das ein Treffer und kostet nichts. Sonst ist es ein **Fehler**: Der Nachschub kostet 1, und ist der Speicher voll, muss eine Seite weichen.
 2. **Die Regel entscheidet, wer weicht:** **LRU** verdrängt die Seite, die am längsten nicht angefragt wurde, **FIFO** die, die am längsten im Speicher liegt, **LFU** die am seltensten angefragte, **Marking mit Zufall** eine zufällige unter den Seiten, die in dieser Phase noch nicht angefragt wurden.
 3. **Das Optimum mit Vorwissen (Belady)** verdrängt die Seite, die am spätesten wieder gebraucht wird; es kennt die ganze Folge.
-4. **Die Garantie:** LRU und FIFO machen höchstens k-mal so viele Fehler wie das Optimum (bis auf eine Konstante), und keine feste Regel kann besser sein. Mit Zufall sinkt der Faktor auf etwa H_k (die harmonische Zahl, sie wächst wie ln k), Marking mit Zufall garantiert 2·H_k.
+4. **Die Garantie:** LRU und FIFO machen höchstens k-mal so viele Fehler wie das Optimum (bis auf eine Konstante), und keine feste Regel kann besser sein. Mit Zufall sinkt der Faktor auf die Größenordnung H_k (die harmonische Zahl, sie wächst wie ln k): Für das Marking mit Zufall ist 2·H_k garantiert, auf der zyklischen Folge messen wir etwa H_k.
 5. **Garantie ist nicht Erwartung:** auf welchen Folgen die Regeln wirklich nahe an ihre Garantie kommen und auf welchen sie weit darunter bleiben, zeigen die Experimente.
         """
     )
